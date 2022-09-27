@@ -9,8 +9,8 @@ done = False
 GAME_CLOCK = pygame.time.Clock()
 BACKGROUND_COLOR = (255, 255, 255)
 GAME_WINDOW = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
-ground_sprite = pygame.image.load("ground.png").convert_alpha()
-dino_sprite = pygame.image.load("dino.png").convert_alpha()
+ground_sprite = pygame.image.load("assets/ground.png").convert_alpha()
+dino_sprite = pygame.image.load("assets/dino.png").convert_alpha()
 
 
 pygame.display.set_caption("DINO CHROME RUNNER")

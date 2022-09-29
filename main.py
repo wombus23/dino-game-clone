@@ -1,40 +1,46 @@
-import sys
 import pygame
+import math
 
 pygame.init()
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 400
-done = False
-GAME_CLOCK = pygame.time.Clock()
-BACKGROUND_COLOR = (255, 255, 255)
-GAME_WINDOW = pygame.display.set_mode([WINDOW_WIDTH, WINDOW_HEIGHT])
-ground_sprite = pygame.image.load("assets/ground.png").convert_alpha()
-dino_sprite = pygame.image.load("assets/dino.png").convert_alpha()
+fps_clock = pygame.time.Clock()
+
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 200
+
+gameState = False
+ground_sprite = pygame.image.load("assets/ground.png")
+player_character = pygame.image.load("assets/dino.png")
+ground_width = ground_sprite.get_width()
+ground_sprite = pygame.transform.scale(ground_sprite, (ground_width, WINDOW_HEIGHT))
+cactus_sprite = pygame.image.load("assets/cactus.png")
+player_character_rect = player_character.get_rect(midbottom=(100, 183))
+cactus_rect = cactus_sprite.get_rect(bottomleft=(800, 180))
+scroll = 0
+tiles = math.ceil(WINDOW_WIDTH / ground_width) + 2
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+pygame.display.set_caption("dino-game-clone")
 
 
-pygame.display.set_caption("DINO CHROME RUNNER")
+while not gameState:
+    fps_clock.tick(20)
 
-while not done:
+    for i in range(tiles):
+        screen.blit(ground_sprite, (i * ground_width + scroll - ground_width, 0))
+    scroll -= 10
+    if abs(scroll) > ground_width:
+        scroll = 0
+
+    screen.blit(player_character, player_character_rect)
+    screen.blit(cactus_sprite, cactus_rect)
+
+    cactus_rect.x -= 7
+    if player_character_rect.colliderect(cactus_rect):
+        print("Collision Detected")
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            done = True
-            pygame.quit()
-            exit()
-        GAME_WINDOW.fill(BACKGROUND_COLOR)
-        GAME_WINDOW.blit(ground_sprite, (-10, 150))
-        pygame.display.flip()
-        GAME_WINDOW.blit(dino_sprite, (10, 180))
-        pygame.display.update()
-        GAME_CLOCK.tick(60)
-        print(GAME_CLOCK)
-
-
-
-
-
-
-
-
-
+            gameState = True
+    pygame.display.flip()
+pygame.quit()
 

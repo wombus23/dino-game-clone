@@ -23,7 +23,7 @@ pygame.display.set_caption("dino-game-clone")
 
 
 while not gameState:
-    fps_clock.tick(20)
+    fps_clock.tick(30)
 
     for i in range(tiles):
         screen.blit(ground_sprite, (i * ground_width + scroll - ground_width, 0))
